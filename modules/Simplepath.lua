@@ -45,24 +45,26 @@ Website: https://00xima16.gitbook.io/simplepath-module/
 
 	--[[ PRIVATE FUNCTIONS ]]--
 	local function declareError(self, errorType)
-		self._lastError = errorType
-		self._events.Error:Fire(errorType)
+		--self._lastError = errorType
+		--self._events.Error:Fire(errorType)
 	end
 
 	--Create visual waypoints
 	local function createVisualWaypoints(waypoints)
-		local visualWaypoints = {}
-		for _, waypoint in ipairs(waypoints) do
-			local visualWaypointClone = visualWaypoint:Clone()
-			visualWaypointClone.Position = waypoint.Position
-			visualWaypointClone.Parent = workspace
-			visualWaypointClone.Color =
-				(waypoint == waypoints[#waypoints] and Color3.fromRGB(0, 255, 0))
-				or (waypoint.Action == Enum.PathWaypointAction.Jump and Color3.fromRGB(255, 0, 0))
-				or Color3.fromRGB(255, 139, 0)
-			table.insert(visualWaypoints, visualWaypointClone)
-		end
-		return visualWaypoints
+		pcall(function()
+			local visualWaypoints = {}
+			for _, waypoint in ipairs(waypoints) do
+				local visualWaypointClone = visualWaypoint:Clone()
+				visualWaypointClone.Position = waypoint.Position
+				visualWaypointClone.Parent = workspace
+				visualWaypointClone.Color =
+					(waypoint == waypoints[#waypoints] and Color3.fromRGB(0, 255, 0))
+					or (waypoint.Action == Enum.PathWaypointAction.Jump and Color3.fromRGB(255, 0, 0))
+					or Color3.fromRGB(255, 139, 0)
+				table.insert(visualWaypoints, visualWaypointClone)
+			end
+			return visualWaypoints
+		end)
 	end
 
 	--Destroy visual waypoints
