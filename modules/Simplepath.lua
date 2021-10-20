@@ -37,6 +37,7 @@ Website: https://00xima16.gitbook.io/simplepath-module/
 
 	--Used to visualize waypoints
 	local visualWaypoint = Instance.new("Part")
+	visualWaypoint.Name ="delete__waypoint"
 	visualWaypoint.Size = Vector3.new(0.3, 0.3, 0.3)
 	visualWaypoint.Anchored = true
 	visualWaypoint.CanCollide = false
@@ -45,26 +46,32 @@ Website: https://00xima16.gitbook.io/simplepath-module/
 
 	--[[ PRIVATE FUNCTIONS ]]--
 	local function declareError(self, errorType)
-		--self._lastError = errorType
-		--self._events.Error:Fire(errorType)
+		self._lastError = errorType
+		self._events.Error:Fire(errorType)
 	end
 
 	--Create visual waypoints
 	local function createVisualWaypoints(waypoints)
-		pcall(function()
-			local visualWaypoints = {}
-			for _, waypoint in ipairs(waypoints) do
-				local visualWaypointClone = visualWaypoint:Clone()
-				visualWaypointClone.Position = waypoint.Position
-				visualWaypointClone.Parent = workspace
-				visualWaypointClone.Color =
-					(waypoint == waypoints[#waypoints] and Color3.fromRGB(0, 255, 0))
-					or (waypoint.Action == Enum.PathWaypointAction.Jump and Color3.fromRGB(255, 0, 0))
-					or Color3.fromRGB(255, 139, 0)
-				table.insert(visualWaypoints, visualWaypointClone)
-			end
-			return visualWaypoints
-		end)
+		local visualWaypoints = {}
+		for _, waypoint in ipairs(waypoints) do
+			local visualWaypointClone = visualWaypoint:Clone()
+			visualWaypointClone.Position = waypoint.Position
+			visualWaypointClone.Parent = workspace
+			visualWaypointClone.Color =
+				(waypoint == waypoints[#waypoints] and Color3.fromRGB(0, 255, 0))
+				or (waypoint.Action == Enum.PathWaypointAction.Jump and Color3.fromRGB(255, 0, 0))
+				or Color3.fromRGB(255, 139, 0)
+			table.insert(visualWaypoints, visualWaypointClone)
+			--Destroy after 2 seconds
+			coroutine.wrap(function()
+				wait(2)
+				pcall(function()
+					visualWaypointClone:Destroy()
+				end)
+			end)()
+			
+		end
+		return visualWaypoints
 	end
 
 	--Destroy visual waypoints
