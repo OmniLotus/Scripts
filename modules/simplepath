@@ -1,4 +1,4 @@
-local function run_()
+
 --[[
 ---------------------------------------------------------------------
 Created by: @V3N0M_Z
@@ -310,6 +310,4 @@ Website: https://00xima16.gitbook.io/simplepath-module/
 		end
 		return true
 	end
-	
-	return Path
-end
+
