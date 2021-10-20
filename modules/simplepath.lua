@@ -315,4 +315,3 @@ Website: https://00xima16.gitbook.io/simplepath-module/
 end
 
 path_=run_()
-print( path_ )
