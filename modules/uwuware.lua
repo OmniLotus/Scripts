@@ -1613,9 +1613,6 @@ function library:Init()
 		syn.protect_gui(self.base)
 	elseif get_hidden_gui then
 		get_hidden_gui(self.base)
-	else
-		game:GetService"Players".LocalPlayer:Kick("Error: protect_gui function not found")
-		return
 	end
 	self.base.Parent = game:GetService"CoreGui"
 	
